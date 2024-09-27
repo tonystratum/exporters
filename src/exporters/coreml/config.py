@@ -111,6 +111,7 @@ class CoreMLConfig():
         task: str,
         use_past: bool = False,
         seq2seq: Optional[str] = None,
+        batch_size: Optional[int] = 1
     ):
         if not hasattr(self, "modality"):
             raise ValueError("the CoreMLConfig subclass must have a modality property")
@@ -122,6 +123,7 @@ class CoreMLConfig():
         self.task = task
         self.use_past = use_past
         self.seq2seq = seq2seq
+        self.batch_size = batch_size
 
     @classmethod
     def from_model_config(
@@ -861,7 +863,7 @@ class CoreMLConfig():
         from transformers.tokenization_utils_base import PreTrainedTokenizerBase
         from transformers.processing_utils import ProcessorMixin
 
-        batch_size = 1
+        batch_size = self.batch_size
         input_descs = self.inputs
         dummy_inputs = {}
 
